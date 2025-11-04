@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #002e6f;
@@ -71,6 +72,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
+            position: relative;
         }
 
         .logo {
@@ -80,6 +82,7 @@
             font-weight: 700;
             font-size: 1.5rem;
             color: var(--primary);
+            z-index: 1001;
         }
 
         .logo-icon {
@@ -94,14 +97,14 @@
             font-weight: bold;
         }
 
-        nav ul {
+        .desktop-nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
             align-items: center;
         }
 
-        nav a {
+        .desktop-nav a {
             text-decoration: none;
             color: var(--primary);
             font-weight: 500;
@@ -109,11 +112,11 @@
             position: relative;
         }
 
-        nav a:hover {
+        .desktop-nav a:hover {
             color: var(--accent);
         }
 
-        nav a::after {
+        .desktop-nav a::after {
             content: '';
             position: absolute;
             width: 0;
@@ -124,53 +127,101 @@
             transition: var(--transition);
         }
 
-        nav a:hover::after {
+        .desktop-nav a:hover::after {
             width: 100%;
+        }
+
+        /* Header Controls */
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Language Toggle - YENİ TASARIM */
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray);
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            transition: var(--transition);
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            overflow: hidden;
+        }
+
+        .lang-flag {
+            position: absolute;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tr-flag {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .en-flag {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .language-toggle.en .tr-flag {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .language-toggle.en .en-flag {
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* Dark Mode Toggle */
         .theme-toggle {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
             background: var(--gray);
-            border-radius: 50px;
-            padding: 5px;
+            border-radius: 50%;
             position: relative;
             cursor: pointer;
-            width: 60px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             transition: var(--transition);
-        }
-
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--primary);
-            transition: transform 0.3s ease;
-            left: 4px;
-        }
-
-        [data-theme="dark"] .theme-toggle::before {
-            transform: translateX(30px);
+            border: none;
+            color: var(--primary);
         }
 
         .theme-icon {
-            font-size: 14px;
-            z-index: 1;
+            font-size: 1rem;
+            transition: var(--transition);
         }
 
         .sun {
-            margin-left: 5px;
-            color: #ffb347;
+            display: block;
         }
 
         .moon {
-            margin-right: 5px;
-            color: #a0a0a0;
+            display: none;
+        }
+
+        [data-theme="dark"] .sun {
+            display: none;
+        }
+
+        [data-theme="dark"] .moon {
+            display: block;
         }
 
         .mobile-menu-btn {
@@ -180,9 +231,70 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary);
+            z-index: 1001;
         }
 
-        /* Hero Section - DAHA DAR YAPILDI */
+        /* Mobile Menu */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--light);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            color: var(--accent);
+        }
+
+        .mobile-controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
         .hero {
             height: 60vh;
             min-height: 450px;
@@ -194,6 +306,7 @@
         .hero-slider {
             height: 100%;
             position: relative;
+            touch-action: pan-y;
         }
 
         .slide {
@@ -311,6 +424,38 @@
             transform: scale(1.2);
         }
 
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .slider-arrow {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
         /* Services Section */
         .section {
             padding: 70px 0;
@@ -367,6 +512,18 @@
             height: 200px;
             background-size: cover;
             background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
         }
 
         .service-content {
@@ -561,6 +718,71 @@
             transform: translateY(0);
         }
 
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 200, 150, 0.3);
+            transition: var(--transition);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 200, 150, 0.4);
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.05;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .about-contact {
@@ -576,31 +798,23 @@
                 height: 50vh;
                 min-height: 400px;
             }
+            
+            .slider-arrows {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
             
-            nav ul {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--light);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 100;
-            }
-            
-            nav ul.active {
-                transform: translateY(0);
-                opacity: 1;
+            .mobile-nav {
+                display: flex;
             }
             
             .hero-buttons {
@@ -623,6 +837,17 @@
                 height: 45vh;
                 min-height: 350px;
             }
+            
+            .floating-elements {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -642,39 +867,74 @@
                 height: 40vh;
                 min-height: 300px;
             }
+            
+            .header-controls {
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
     <!-- Header -->
     <header>
         <div class="container header-container">
             <div class="logo">
                 <div class="logo-icon">B</div>
-                <span>ByteDestek By Burkito BABA</span>
+                <span>ByteDestek</span>
             </div>
-            <nav>
+            
+            <nav class="desktop-nav">
                 <ul>
                     <li><a href="#home">Ana Sayfa</a></li>
                     <li><a href="#services">Hizmetlerimiz</a></li>
                     <li><a href="#why-us">Neden Biz?</a></li>
                     <li><a href="#about">Hakkımızda</a></li>
                     <li><a href="#contact">İletişim</a></li>
-                    <li>
-                        <div class="theme-toggle">
-                            <span class="theme-icon sun">☀️</span>
-                            <span class="theme-icon moon">🌙</span>
-                        </div>
+                    <li class="header-controls">
+                        <button class="language-toggle">
+                            <span class="lang-flag tr-flag">TR</span>
+                            <span class="lang-flag en-flag">EN</span>
+                        </button>
+                        <button class="theme-toggle">
+                            <i class="theme-icon sun fas fa-sun"></i>
+                            <i class="theme-icon moon fas fa-moon"></i>
+                        </button>
                     </li>
                 </ul>
             </nav>
+            
             <button class="mobile-menu-btn">☰</button>
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <nav class="mobile-nav">
+        <button class="close-menu">×</button>
+        <ul>
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#services">Hizmetlerimiz</a></li>
+            <li><a href="#why-us">Neden Biz?</a></li>
+            <li><a href="#about">Hakkımızda</a></li>
+            <li><a href="#contact">İletişim</a></li>
+        </ul>
+        <div class="mobile-controls">
+            <button class="language-toggle">
+                <span class="lang-flag tr-flag">TR</span>
+                <span class="lang-flag en-flag">EN</span>
+            </button>
+            <button class="theme-toggle">
+                <i class="theme-icon sun fas fa-sun"></i>
+                <i class="theme-icon moon fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-slider">
+        <div class="hero-slider" id="heroSlider">
             <!-- Slide 1 -->
             <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
                 <div class="slide-overlay"></div>
@@ -714,6 +974,11 @@
                 </div>
             </div>
             
+            <div class="slider-arrows">
+                <button class="slider-arrow prev-arrow">❮</button>
+                <button class="slider-arrow next-arrow">❯</button>
+            </div>
+            
             <div class="slider-nav">
                 <div class="slider-dot active" data-slide="0"></div>
                 <div class="slider-dot" data-slide="1"></div>
@@ -751,6 +1016,14 @@
                     <div class="service-content">
                         <h3>Ağ Kurulumu</h3>
                         <p>Ofis ağ mimarisi, kablosuz optimizasyon ve kurulum hizmetleri.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="service-content">
+                        <h3>Web Site Yapımı</h3>
+                        <p>Modern, responsive ve SEO uyumlu web siteleri tasarlıyoruz.</p>
                     </div>
                 </div>
             </div>
@@ -811,13 +1084,13 @@
                     <h3>İletişim</h3>
                     <div class="contact-info">
                         <div class="contact-item">
-                            <i>📱</i> <span>WhatsApp: +90 555 123 45 67</span>
+                            <i class="fab fa-whatsapp"></i> <span>WhatsApp: +90 555 123 45 67</span>
                         </div>
                         <div class="contact-item">
-                            <i>📞</i> <span>Telefon: +90 212 123 45 67</span>
+                            <i class="fas fa-phone"></i> <span>Telefon: +90 212 123 45 67</span>
                         </div>
                         <div class="contact-item">
-                            <i>✉️</i> <span>E-posta: info@bytedestek.com</span>
+                            <i class="fas fa-envelope"></i> <span>E-posta: info@bytedestek.com</span>
                         </div>
                     </div>
                     
@@ -842,19 +1115,50 @@
         </div>
     </footer>
 
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <button class="floating-btn" id="scrollTopBtn">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <a href="https://wa.me/905551234567" class="floating-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
     <script>
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navMenu = document.querySelector('nav ul');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const closeMenuBtn = document.querySelector('.close-menu');
         
         mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
         
-        // Hero Slider
+        closeMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close mobile menu when clicking on a link
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Hero Slider with Touch Support
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.slider-dot');
+        const prevArrow = document.querySelector('.prev-arrow');
+        const nextArrow = document.querySelector('.next-arrow');
+        const heroSlider = document.getElementById('heroSlider');
         let currentSlide = 0;
+        let startX = 0;
+        let endX = 0;
         
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove('active'));
@@ -866,16 +1170,56 @@
             dots[currentSlide].classList.add('active');
         }
         
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 showSlide(index);
             });
         });
         
+        prevArrow.addEventListener('click', prevSlide);
+        nextArrow.addEventListener('click', nextSlide);
+        
         // Auto slide change
-        setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        // Pause auto slide on hover
+        heroSlider.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        heroSlider.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+        
+        // Touch swipe support
+        heroSlider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        
+        heroSlider.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            
+            if (startX - endX > swipeThreshold) {
+                // Swipe left - next slide
+                nextSlide();
+            } else if (endX - startX > swipeThreshold) {
+                // Swipe right - previous slide
+                prevSlide();
+            }
+        }
         
         // Scroll animations
         const fadeElements = document.querySelectorAll('.fade-in');
@@ -908,15 +1252,12 @@
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu if open
-                    navMenu.classList.remove('active');
                 }
             });
         });
 
         // Dark Mode Toggle
-        const themeToggle = document.querySelector('.theme-toggle');
+        const themeToggles = document.querySelectorAll('.theme-toggle');
         const body = document.body;
         
         // Check for saved theme preference or respect OS preference
@@ -927,15 +1268,81 @@
             body.setAttribute('data-theme', 'dark');
         }
         
-        themeToggle.addEventListener('click', () => {
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
+        themeToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                if (body.getAttribute('data-theme') === 'dark') {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        });
+        
+        // Language Toggle - YENİ TASARIM
+        const languageToggles = document.querySelectorAll('.language-toggle');
+        
+        languageToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('en');
+                
+                // Dil değişikliği efekti
+                if (toggle.classList.contains('en')) {
+                    // İngilizce moduna geç
+                    console.log('Dil İngilizce olarak değiştirildi');
+                    // Burada dil değişikliği işlemleri yapılabilir
+                } else {
+                    // Türkçe moduna geç
+                    console.log('Dil Türkçe olarak değiştirildi');
+                    // Burada dil değişikliği işlemleri yapılabilir
+                }
+            });
+        });
+        
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.style.display = 'flex';
             } else {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+                scrollTopBtn.style.display = 'none';
             }
         });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Particle Background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Rastgele boyut ve pozisyon
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Sayfa yüklendiğinde partikülleri oluştur
+        window.addEventListener('load', createParticles);
     </script>
 </body>
 </html>
